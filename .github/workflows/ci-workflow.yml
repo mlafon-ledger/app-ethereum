@@ -125,6 +125,18 @@ jobs:
     name: Speculos tests
     needs: [building_for_e2e_speculos_tests]
     runs-on: ubuntu-latest
+
+    container:
+      image: ghcr.io/ledgerhq/app-bitcoin-new/speculos-bitcoin:latest
+      ports:
+        - 1234:1234
+        - 9999:9999
+        - 40000:40000
+        - 41000:41000
+        - 42000:42000
+        - 43000:43000
+      options: --entrypoint /bin/bash
+
     steps:
       - name: Test
         run: |
@@ -132,20 +144,9 @@ jobs:
           echo $HOME
           echo $DISPLAY
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - run: sudo apt-get update -y && sudo apt-get install -y libusb-1.0.0 libudev-dev
-
-      - name: Install Python3
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.8.10"
-          architecture: 'x64'
-
-      - name: Install dependencies
-        run: |
-          cd tests/speculos
-          python3 -m pip install --extra-index-url https://test.pypi.org/simple/ -r requirements.txt
 
       - name: Create tmp folder for artifacts
         run: mkdir tests/speculos/elfs
@@ -161,6 +162,7 @@ jobs:
       - name: Run speculos tests
         run: | 
           cd tests/speculos
-          pytest --model nanos --path ./elfs/nanos.elf --display headless
-          pytest --model nanox --path ./elfs/nanox.elf --display headless
-          pytest --model nanosp --path ./elfs/nanosp.elf --display headless
+          python3 -m pip install --extra-index-url https://test.pypi.org/simple/ -r requirements.txt
+          PATH=$PATH:/speculos pytest --model nanos --path ./elfs/nanos.elf --display headless
+          PATH=$PATH:/speculos pytest --model nanox --path ./elfs/nanox.elf --display headless
+          PATH=$PATH:/speculos pytest --model nanosp --path ./elfs/nanosp.elf --display headless
