@@ -146,8 +146,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - run: sudo apt-get update -y && sudo apt-get install -y libusb-1.0.0 libudev-dev
-
       - name: Create tmp folder for artifacts
         run: mkdir tests/speculos/elfs
 
