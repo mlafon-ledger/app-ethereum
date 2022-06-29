@@ -160,7 +160,7 @@ jobs:
       - name: Run speculos tests
         run: | 
           cd tests/speculos
-          python3 -m pip install --extra-index-url https://test.pypi.org/simple/ -r requirements.txt
+          pip install --extra-index-url https://test.pypi.org/simple/ -r requirements.txt
           PATH=$PATH:/speculos pytest --model nanos --path ./elfs/nanos.elf --display headless
           PATH=$PATH:/speculos pytest --model nanox --path ./elfs/nanox.elf --display headless
           PATH=$PATH:/speculos pytest --model nanosp --path ./elfs/nanosp.elf --display headless
