@@ -158,10 +158,12 @@ jobs:
       - name: Gather elfs
         run: cp `find tmp/e2e_elfs/ -name "*.elf"` tests/speculos/elfs/
 
+      - name: Check Dependencies
+        run: pip3 freeze | grep speculos
+
       - name: Run speculos tests
         run: | 
           cd tests/speculos
-          ls ./elfs
           pytest --model nanos --path ./elfs/nanos.elf --display headless
           pytest --model nanox --path ./elfs/nanox.elf --display headless
           pytest --model nanosp --path ./elfs/nanosp.elf --display headless
