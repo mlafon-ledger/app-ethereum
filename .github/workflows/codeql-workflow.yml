@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - develop
+      - testql2
   pull_request:
     branches:
       - master
