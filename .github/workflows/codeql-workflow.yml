@@ -17,7 +17,9 @@ jobs:
     strategy: 
       matrix:
         include:
-          SDK: ["$NANOS_SDK", "$NANOX_SDK", "$NANOSP_SDK"]
+          - SDK: "$NANOS_SDK"
+          - SDK: "$NANOX_SDK"
+          - SDK: "$NANOSP_SDK"
         language: [ 'cpp' ]
     runs-on: ubuntu-latest
 
